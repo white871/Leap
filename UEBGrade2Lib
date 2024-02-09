@@ -67,4 +67,42 @@
    '010011': '.', 
    '010010': ':', 
    '110000': ';'
+
+   # Contractions
+    'b': 'but', 
+    'c': 'can', 
+    'd': 'do', 
+    'e': 'every', 
+    'f': 'from', 
+    'g': 'go', 
+    'h': 'have', 
+    'j': 'just', 
+    'k': 'knowledge', 
+    'm': 'more', 
+    'n': 'not', 
+    'p': 'people', 
+    'q': 'quite', 
+    'r': 'rather', 
+    's': 'so', 
+    't': 'that', 
+    'st': 'still', 
+    'ch': 'child', 
+    'u': 'us', 
+    'v': 'very', 
+    'x': 'it', 
+    'y': 'you', 
+    'z': 'as', 
+    'sh': 'shall', 
+    'th': 'this', 
+    'wh': 'which', 
+    'ou': 'out', 
+    'w': 'will', 
+    'bb': 'be', 
+    'enough': 'en', 
+    'ff': 'to', 
+    'gg': 'were',
+    '”': 'was', 
+    'brl': 'braille'
+    'ab': 'about'
+    
 }
