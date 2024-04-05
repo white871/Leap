@@ -19,7 +19,7 @@ This repository contains Python code for reading Hall Effect sensor outputs, UEB
 - To copy a file FROM the pi, open terminal and use the following command: scp (pi name)@(pi address):~/(directory on Pi) (directory on user's computer)
   - I recommend copying files from the Pi directly to your local Github repository folder to make updating the online repository a quicker process
 ## If multiple people are working on the Leap code:
-- Fork the repository so you can make updates to the code all you like. Make a pull request and upload the code when you're done to keep updated on the main repository and the Pi.
+- Fork the repository so you can make updates to the code all you like. Make a pull request and upload the code when you're done to keep the main repository and the Pi updated.
   
 
 
