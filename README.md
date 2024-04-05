@@ -20,7 +20,6 @@ This repository contains Python code for reading Hall Effect sensor outputs, UEB
   - I recommend copying files from the Pi directly to your local Github repository folder to make updating the online repository a quicker process
 ## If multiple people are working on the Leap code:
 - Fork the repository so you can make updates to the code all you like. Make a pull request and upload the code when you're done to keep the main repository and the Pi updated.
-  
-
-
+## If I'm no longer on the team
+- Fork the repository and treat that as the main repository, or just make a new repository with all the files and abandon this repository
 
