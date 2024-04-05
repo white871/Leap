@@ -23,3 +23,5 @@ This repository contains Python code for reading Hall Effect sensor outputs, UEB
 ## If I'm no longer on the team
 - Fork the repository and treat that as the main repository, or just make a new repository with all the files and abandon this repository
 
+## Folders:
+- To be updated
