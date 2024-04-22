@@ -24,4 +24,10 @@ This repository contains Python code for reading Hall Effect sensor outputs, UEB
 - Fork the repository and treat that as the main repository, or just make a new repository with all the files and abandon this repository
 
 ## Folders:
-- To be updated
+**Internal Tests**: Program(s) for testing electrical components, only contains a testing program used for troubleshooting/testing to ensure that the hall effect PCB works as intended.
+**Rotary Encoding**: Contains code and output file for tracking a student's vertical position of a page using a rotary encoder. 
+**Test Code**: Contains code that is work-in-progress and/or is not needed for the Raspberry Pi's operations. 
+**Transliteration**: Programs, dictionaries, and output text files for reading Brailler inputs and converting to text. 
+
+## Extra Stuff:
+**GUITest.py and scp.py**: Programs for enabling the Raspberry Pi outputs to be sent on a GUI on a user's device using ssh. 
