@@ -1,5 +1,5 @@
 # Leap Raspberry Pi Code
-*Last updated: 4/5/2024*
+*Last updated: 4/22/2024*
 
 This repository contains Python code for reading Hall Effect sensor outputs, UEB Grade 2 transliteration, reading rotary encoder outputs and line reading, 
 
