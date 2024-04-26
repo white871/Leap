@@ -14,7 +14,7 @@ def createSSHClient(server, port, user, password):
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
 	client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-	client.connect(server, port, user, password)
+	client.connect(server, port, user, password, timeout = 3.0)
 	return client
 
 def is_process_running(process_name):
@@ -31,7 +31,7 @@ def connect():
 	global login
 	global enterBt
 	global ip_entry
-	if is_process_running("WINWORD.EXE"):
+	if (is_process_running("WINWORD.EXE")):
 		status.config(text = "Please close all word tabs before creating new doc.")
 	else:
 		status.config(text = "Connecting...")
@@ -41,7 +41,7 @@ def connect():
 			ssh = createSSHClient(server, 22, "leap", "BestTeam")
 			ssh.invoke_shell()
 			ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('/bin/bash -lc "cd Transliteration; python transliteration.py"')
-			scp_client = scp.SCPClient(ssh.get_transport())
+			scp_client = scp.SCPClient(ssh.get_transport(), socket_timeout = 3.0)
 			status.config(text = "Connected! Please close all Word tabs to create new doc. (Make sure to save your progress.)")
 			login.update_idletasks()
 			edit_word()
@@ -53,36 +53,43 @@ def edit_word():
 	global scp_client
 	global ssh
 	global server
-	try:
-		word = win32com.client.gencache.EnsureDispatch('Word.Application')
-		braille_doc = word.Documents.Add()
-		ascii_doc = word.Documents.Add()
-		word.Visible = True
-		word.WindowState = win32com.client.constants.wdWindowStateMaximize
-		win32gui.SetForegroundWindow(word.ActiveWindow.Hwnd)
-		ascii_doc.Sections(1).Headers(win32com.client.constants.wdHeaderFooterPrimary).Range.Text = server + " Alpha-Numeric"
-		braille_doc.Sections(1).Headers(win32com.client.constants.wdHeaderFooterPrimary).Range.Text = server + " Braille"
-		while (True):
-			while (True):
-				try:
-					scp_client.get("~/Transliteration/transliterateOutput.txt")
-					scp_client.get("~/Transliteration/tempBin.txt")
-					break
-				except:
-					pass
+	login.destroy()
+	word = win32com.client.gencache.EnsureDispatch('Word.Application')
+	braille_doc = word.Documents.Add()
+	ascii_doc = word.Documents.Add()
+	word.Visible = True
+	word.WindowState = win32com.client.constants.wdWindowStateMaximize
+	ascii_doc.Sections(1).Headers(win32com.client.constants.wdHeaderFooterPrimary).Range.Text = server + " Alpha-Numeric"
+	braille_doc.Sections(1).Headers(win32com.client.constants.wdHeaderFooterPrimary).Range.Text = server + " Braille"
+	while (True):
+		try:
+			print("trying again")
+			scp_client.get("~/Transliteration/transliterateOutput.txt")
+			scp_client.get("~/Transliteration/tempBin.txt")
+			print("here:(")
 			f_scp_ascii = open("transliterateOutput.txt", "r")
 			f_scp_braille = open("tempBin.txt")
 			ascii_doc.Content.Text = f_scp_ascii.read()
+			ascii_doc.Content.Font.Size = 16
 			braille_doc.Content.Text = binarytobraille.binToBraille(f_scp_braille.read())
-	except Exception as e:
-		on_closing()
-	
-	
+			braille_doc.Content.Font.Size = 16
+			print("herekdkd")
+			ssh.get_transport().set_keepalive(60)
+		except Exception as e:
+			print(str(e))
+			if 'None' in str(e):
+				on_closing()
+				exit()
+			else:
+				pass
+
 def on_closing():
 	global ssh
 	global enterBt
 	ssh.exec_command('/bin/bash -lc "pkill -f transliteration"')
 	ssh.exec_command('/bin/bash -lc "pkill -f encoder"')
+	exit()
+
 
 def to_login(): # Sequence 1
 	global no_win
@@ -123,6 +130,5 @@ label3.pack(pady = 20)
 
 button1 = tkinter.Button(win, text = 'I have read the following information above.', command = to_login, font = "Calibri 18")
 button1.pack(pady = 30)
-#win.after(3000, lambda: button1.config(state = 'normal'))
 no_win = False
 win.mainloop()
