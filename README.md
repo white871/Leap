@@ -20,7 +20,7 @@ This repository contains Python code for reading Hall Effect sensor outputs, UEB
   - I recommend copying files from the Pi directly to your local Github repository folder to make updating the online repository a quicker process
 ### For building an EXE file
   - Download PyInstaller using "pip install PyInstaller"
-  - Run "python -m PyInstaller --onefile -w leap.py" in the directory where leap.py is present.
+  - Run "python -m PyInstaller --onefile --hidden-import tkinter -w leap.py" in the directory where leap.py is present.
 ## If multiple people are working on the Leap code:
 - Fork the repository so you can make updates to the code all you like. Make a pull request and upload the code when you're done to keep the main repository and the Pi updated.
 ## If I'm no longer on the team
