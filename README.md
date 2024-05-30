@@ -5,12 +5,12 @@
 Original Authors: Joseph White (*white871@purdue.edu*) and Patrick Baysinger (*Graduated Spring 2024, patbaysing@gmail.com*)<br> <br>
 This repository contains Python code for reading Hall Effect sensor outputs, UEB Grade 2 transliteration, reading rotary encoder outputs and line reading, connecting via ssh, outputting to a word document in real-time, and building the GUI for user-friendliness. <br> <br>
 For more information regarding our progress and a more in-depth explanation on what we use in this project, look at the software transition document in Microsoft Teams.
-## This code must be kept up to date with the code in the Raspberry Pi, therefore you can copy files to and from the Raspberry Pi
+## This code must be kept up to date with the code in the Raspberry Pi; you can copy files to and from the Raspberry Pi using an ssh connection.
 ### Connecting to the Raspberry Pi: 
 - Chances are you probably would not be able to have the Pi connect to Purdue's Wifi, so most likely you will need to use a hotspot for connecting to the Raspberry Pi:
   - Setup the hotspot with the name *and* password set as **PiConfig**, therefore the Pi can automatically connect to the hotspot
   - The user uploading/downloading code from the Pi must be connected to this hotspot as well
-  - You will also need the Pi's IP address (you can easily find this with an Android phone by going into the hotspot settings, not sure about an iPhone though)
+  - You will also need the Pi's IP address (you can easily find this with an Android phone or a Windows computer by going into the hotspot settings, not sure about Apple products though)
 - If you successfully connect, you will be prompted with a password to the Pi: "BestTeam"
 ### For uploading code to the Pi:
 - When these files are changed, upload them to the Raspberry Pi
@@ -33,9 +33,9 @@ For more information regarding our progress and a more in-depth explanation on w
 **Rotary Encoding**: Contains code and output file for tracking a student's vertical position of a page using a rotary encoder.<br> 
 **TestCode**: Contains code that is work-in-progress and/or is not needed for the Raspberry Pi's operations.<br>
 **Transliteration**: Programs, dictionaries, and output text files for reading Brailler inputs and converting to text.<br>
-**Client**: Python files used in building the .exe application
+**Client**: Python files used in building the .exe application <br>
 **archive**: Past code that is no longer used
 
-## Other Files:
+## Main Files:
 **main.py**: Python file that creates the GUI using Tkinter and opens a local ssh connection to obtain the Raspberry Pi outputs wirelessly (see instructions on using a hotspot for connecting to the Rapsberry Pi)<br>
-**leap.exe**: The application itself, currently in a soft delivery stage (say v0.1.0, basically the first build we have done)
+**leap.exe**: Our first build of the application itself, currently in a soft delivery stage
