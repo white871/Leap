@@ -37,5 +37,5 @@ This repository contains Python code for reading Hall Effect sensor outputs, UEB
 **archive**: Past code that is no longer used
 
 ## Other Files:
-** main.py: Python file that creates the GUI using Tkinter and opens a local ssh connection to obtain the Raspberry Pi outputs wirelessly (see instructions on using a hotspot for connecting to the Rapsberry Pi)<br>
-**leap.exe: The application itself, currently in a soft delivery stage (say v0.1.0, basically the first build we have done)
+**main.py**: Python file that creates the GUI using Tkinter and opens a local ssh connection to obtain the Raspberry Pi outputs wirelessly (see instructions on using a hotspot for connecting to the Rapsberry Pi)<br>
+**leap.exe**: The application itself, currently in a soft delivery stage (say v0.1.0, basically the first build we have done)
