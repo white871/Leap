@@ -2,7 +2,7 @@
 
 *Last updated: 5/30/2024*
 =======
-Original Authors: Joseph White (*white871@purdue.edu*) and Patrick Baysinger (*Graduated Spring 2024, patbaysing@gmail.com*)<br />
+Original Authors: Joseph White (*white871@purdue.edu*) and Patrick Baysinger (*Graduated Spring 2024, patbaysing@gmail.com*)<br> <br>
 This repository contains Python code for reading Hall Effect sensor outputs, UEB Grade 2 transliteration, reading rotary encoder outputs and line reading, 
 
 ## This code must be kept up to date with the code in the Raspberry Pi, therefore you can copy files to and from the Raspberry Pi
@@ -25,9 +25,9 @@ This repository contains Python code for reading Hall Effect sensor outputs, UEB
   - Run "python -m PyInstaller --onefile --hidden-import tkinter -w leap.py" in the directory where leap.py is present.
 ## If multiple people are working on the Leap code:
 - Fork the repository so you can make updates to the code all you like. Make a pull request and upload the code when you're done to keep the main repository and the Pi updated.
-## If I'm no longer on the team
+## If original authors are no longer on the team
 - Fork the repository and treat that as the main repository, or just make a new repository with all the files and abandon this repository
-- Reach out to patbaysing@gmail.com if more help is needed.
+- Feel free to contact original authors (see emails under header) if further assistance is needed. 
 ## Folders:
 **Internal Tests**: Program(s) for testing electrical components, only contains a testing program used for troubleshooting/testing to ensure that the hall effect PCB works as intended.<br>
 **Rotary Encoding**: Contains code and output file for tracking a student's vertical position of a page using a rotary encoder.<br> 
