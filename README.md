@@ -3,8 +3,8 @@
 *Last updated: 5/30/2024 by Joseph White*
 =======
 Original Authors: Joseph White (*white871@purdue.edu*) and Patrick Baysinger (*Graduated Spring 2024, patbaysing@gmail.com*)<br> <br>
-This repository contains Python code for reading Hall Effect sensor outputs, UEB Grade 2 transliteration, reading rotary encoder outputs and line reading, 
-
+This repository contains Python code for reading Hall Effect sensor outputs, UEB Grade 2 transliteration, reading rotary encoder outputs and line reading. <br> <br>
+For more information regarding our progress and a more in-depth explanation on what we use in this project, look at the software transition document in Microsoft Teams.
 ## This code must be kept up to date with the code in the Raspberry Pi, therefore you can copy files to and from the Raspberry Pi
 ### Connecting to the Raspberry Pi: 
 - Chances are you probably would not be able to have the Pi connect to Purdue's Wifi, so most likely you will need to use a hotspot for connecting to the Raspberry Pi:
