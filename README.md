@@ -24,15 +24,18 @@ This repository contains Python code for reading Hall Effect sensor outputs, UEB
   - Download PyInstaller using "pip install PyInstaller"
   - Run "python -m PyInstaller --onefile --hidden-import tkinter -w leap.py" in the directory where leap.py is present.
 ## If multiple people are working on the Leap code:
-- Fork the repository so you can make updates to the code all you like. Make a pull request and upload the code when you're done to keep the main repository and the Pi updated. NOTE: I highly recommend working on separate code files overall, Github will not merge changes from different users, only from one user. 
+- Fork the repository so you can make updates to the code all you like. Make a pull request and upload the code when you're done to keep the main repository and the Pi updated. NOTE: I highly recommend working on separate code files overall, Github will not merge changes for one file from different users, only from one user. 
 ## If original authors are no longer on the team
 - Fork the repository and treat that as the main repository, or just make a new repository with all the files and abandon/archive this repository
 - Feel free to contact original authors (see emails under header) if further assistance is needed. 
 ## Folders:
 **Internal Tests**: Program(s) for testing electrical components, only contains a testing program used for troubleshooting/testing to ensure that the hall effect PCB works as intended.<br>
 **Rotary Encoding**: Contains code and output file for tracking a student's vertical position of a page using a rotary encoder.<br> 
-**Test Code**: Contains code that is work-in-progress and/or is not needed for the Raspberry Pi's operations.<br>
+**TestCode**: Contains code that is work-in-progress and/or is not needed for the Raspberry Pi's operations.<br>
 **Transliteration**: Programs, dictionaries, and output text files for reading Brailler inputs and converting to text.<br>
+**Client**: Python files used in building the .exe application
+**archive**: Past code that is no longer used
 
-## Extra Stuff:
-**GUITest.py and scp.py**: Programs for enabling the Raspberry Pi outputs to be sent on a GUI on a user's device using ssh. 
+## Other Files:
+** main.py: Python file that creates the GUI using Tkinter and opens a local ssh connection to obtain the Raspberry Pi outputs wirelessly (see instructions on using a hotspot for connecting to the Rapsberry Pi)<br>
+**leap.exe: The application itself, currently in a soft delivery stage (say v0.1.0, basically the first build we have done)
