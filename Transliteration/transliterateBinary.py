@@ -18,6 +18,7 @@ def transliterateBin(inputB):
     global i
     global lastOutput
     
+    
     inputarr = []
     i = 0
 

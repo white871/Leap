@@ -1,0 +1,113 @@
+{ 
+  "001111" : "./numeric indicator",
+  "010000" : "1",
+  "011000": "2",
+  "010010": "3",
+  "010011": "4",
+  "010001": "5",
+  "011010": "6",
+  "011011": "7",
+  "011001": "8",
+  "001010": "9",
+  "001011": "0",
+  "000111" : "./punctuation indicator",
+  "000001" : ",",
+  #mathematical comma
+  "001101" : "+",
+  "001001" : "-",
+  "000101101000" : "=",
+  "000101010000" : ">",
+  "000010101000" : "<",
+  #abbrecviations below
+  "000110000101100001" : "º",
+  "010100101110" : "in",
+  "110100011110" : "ft",
+  "101111100110" : "yd",
+  "101100010100" : "mi",
+  "000011100100" : "c",
+  "111100011110" : "pt",
+  "111110011110" : "qt",
+  "110110100000111000" : "gal",
+  "101010101011" : "oz",
+  "111000110000011100" : "lbs",
+  "000011000001011110" : "T",
+  "101100101100" : "mm",
+  "100100101100" : "cm",
+  "100110101100" : "dm",
+  "000011101100" : "m",
+  "101000101100" : "km",
+  "101100000001111000" : "mL",
+  "000011000001111000" : "L",
+  "000011110110" : "g",
+  "101000110110" : "kg",
+  "000110000101100001000000000011000001110100" : "ºF",
+  "000110000101100001000000000011000001100100" : "ºC",
+  "000101" : ".", #decimal point
+  "000100011100" : "$", #acts as numeric indicator
+  "000100011100" : "¢",
+  "000100100001" : "×",
+  "000101001100" : "÷",
+  "111011" : "(", #acts as numeric indicator use nemeth numbers inside and terminates when space is hit
+  "011111" : ")", 
+  #fractions are below remember letters can be put into fractions as well as numbers
+  "100111" : "./opening fraction indicator", # acts as a numeric indicator
+  "001100" : "/", #diagonal line serperating nummerator on left and denominator on right
+  "001111" : "./closing fraction indicator",
+  #end of fractions
+  "111111" : "?", #omission symbol showing the student is meant to find what is supposed to be here its like an unknown
+  "001000001000001000" : "...", #ellipsis
+  "001001001001001001001001" : "—",
+  #Roman Numerals watch out I think they act kinda weird I do not understand it
+  "000011000001010100" : "I",
+  "000011000001111001" : "V",
+  "000011000001101101" : "X",
+  "000011000001111000" : "L",
+  "000011000001100100" : "C",
+  "000011000001101100" : "M",
+  "000011111001" : "v",
+  "000011010100010100010100" : "iii",
+  "000111100111" : "./opening mixed fraction indicator", #acts as a numeric indicator
+  "000111001111" : "./closing mixed fraction indicator" ,
+  "000111100101" : "./opening Nemeth Indiciator",
+  "000111100011" : "./closing nemeth indicator",
+  "000001001000" : "./single-word switch indicator", #acts as a single word Nemeth terminator
+  # variables are next read section 4.1 for more info on implementation
+  "000101111100" : "π",
+  #shape omission
+  "110101011110" : "△",
+  "110101010011" : "□",
+  "110101100100" : "○",
+  "000010010000" : ":", #rato
+  "000100001011" : "%",
+  #Basic gemoetric symbol rules need to be read it looks kinda complicated
+  "110101010101" : "∠",
+  #letters from UEB brailleLib.txt i just copied and pasted it in
+  "000000": " ", 
+  "100000": "a", 
+  "110000": "b", 
+  "100100": "c", 
+  "100110": "d", 
+  "100010": "e", 
+  "110100": "f", 
+  "110110": "g", 
+  "110010": "h", 
+  "010100": "i", 
+  "010110": "j", 
+  "101000": "k",
+  "111000": "l",
+  "101100": "m",
+  "101110": "n",
+  "101010": "o",
+  "111100": "p",
+  "111110": "q",
+  "111010": "r",
+  "011100": "s",
+  "011110": "t",
+  "101001": "u",
+  "111001": "v",
+  "010111": "w",
+  "101101": "x",
+  "101111": "y",
+  "101011": "z",
+  "000001": "./capital letter^^",
+}
