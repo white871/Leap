@@ -1,5 +1,6 @@
 { 
-  "001111" : "./numeric indicator",
+  "000000" : " ",
+  #"001111" : "./numeric indicator"
   "010000" : "1",
   "011000": "2",
   "010010": "3",
@@ -10,7 +11,7 @@
   "011001": "8",
   "001010": "9",
   "001011": "0",
-  "000111" : "./punctuation indicator",
+  #"000111" : "./punctuation indicator",
   "000001" : ",",
   #mathematical comma
   "001101" : "+",
@@ -50,9 +51,9 @@
   "111011" : "(", #acts as numeric indicator use nemeth numbers inside and terminates when space is hit
   "011111" : ")", 
   #fractions are below remember letters can be put into fractions as well as numbers
-  "100111" : "./opening fraction indicator", # acts as a numeric indicator
+  #"100111" : "./opening fraction indicator", # acts as a numeric indicator
   "001100" : "/", #diagonal line serperating nummerator on left and denominator on right
-  "001111" : "./closing fraction indicator",
+  #"001111" : "./closing fraction indicator",
   #end of fractions
   "111111" : "?", #omission symbol showing the student is meant to find what is supposed to be here its like an unknown
   "001000001000001000" : "...", #ellipsis
@@ -109,5 +110,5 @@
   "101101": "x",
   "101111": "y",
   "101011": "z",
-  "000001": "./capital letter^^",
+  #"000001": "./capital letter^^",
 }
