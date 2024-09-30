@@ -27,21 +27,25 @@ nums = {
   "011011": "7",
   "011001": "8",
   "001010": "9",
-  "001011": "0"
+  "001011": "0",
+  "000001" : ","
 }
 flags = {
-    "001111" : "NUM",
-    "000100011100" : "NUM",
-    "000100100100" : "NUM",
-    "111011" : "NUM", 
-    "000111" : "PUN",
+    "001111" : "NUM",       # Numeric indicator
+    "000100011100" : "NUM", # $
+    "000100100100" : "NUM", # Cent symbol
+    "111011" : "NUM",       # Opening Parenthesis
+    "001101" : "NUM",       # Plus
+    "001001" : "NUM",       
+    "000111" : "PUN",   
     "000001" : "CAP",
+    "000011" : "GD1",
     "100111" : "FRA",
 }
 
 
 def transliterateBin(inputB):
-    global CAP, LEN, TRAN, NME, LIB, NUM, PUN, FRACT, SPC, CONT, bLib, b2b, nLib, tlOut, lastOut, i
+    global CAP, LEN, TRAN, NME, LIB, NUM, PUN, FRACT, SPC, CONT, bLib, nLib, tlOut, lastOut, i
     LIB = CAP = LEN = TRAN = NME = NUM = PUN = FRACT = SPC = CONT = 0
     global flags
     NME = 1 # Remove when ready to test mixed Braille
@@ -70,35 +74,45 @@ def transliterateBin(inputB):
                 possible[posLen - k - 1] = ("".join(iarr[i:i+k+1]))
         TRAN = 0
         
-        print(f"POSSIBLE: {possible}")
+        #print(f"POSSIBLE: {possible}")
         def chkFlags(item):
+            
             global PUN, CAP, NUM, FRACT, NME, CONT
-            if item in nLib.keys() or item in bLib.keys():
+            if item in nLib.keys():
                 CONT = 1;
             else:
                 CONT = 0;
             if item in flags.keys():
+                print("Maybe a flag?")
+                print(f"{flags[item]}, {FRACT}")
                 PUN = 1 if flags[item] == "PUN" else 0
-                CAP = 1 if (flags[item] == "CAP" and FRACT == 0 and NME == 0) else 0
-                NUM = 1 if flags[item] == "NUM" else 0
+                CAP += 1 if (flags[item] == "CAP" and FRACT == 0) else CAP
                 FRACT = 1 if flags[item] == "FRA" else 0
+                FRACT = 0 if (flags[item] == "NUM" and FRACT == 1) else FRACT
+                NUM = 1 if ((flags[item] == "NUM" and FRACT == 0) or FRACT == 1) else 0
+                print(CAP)
+                #print(PUN or CAP or NUM or FRACT)
                 return (PUN or CAP or NUM or FRACT)
             return 0
             
             
         def UEB(item):
-            pass
-            """ for val in bLib[item]:
-                if "./" in val:
-                    tlOut   """   
+            global iarr
+            for perhaps in bLib[item]:
+                pass
+                     
             
 
         def NEM(item):
-            global tlOut, i, TRAN, NUM, CAP
+            global tlOut, i, TRAN, NUM, CAP, SPC
+            print(f"{item} passed, checking")
             #print(nLib[item])
             if item == '000000':
+                SPC = 1
                 NUM = 0
-
+                CAP = 0
+            else:
+                SPC = 0
             TRAN = 1
             
             if NUM and item in nums.keys(): 
@@ -106,9 +120,13 @@ def transliterateBin(inputB):
             else:
                 out = nLib[item]
             
-            if CAP:
-                out = out.capitalize()
-                CAP = 0
+            match CAP: 
+                case 1:
+                    out = out.capitalize()
+                    CAP = 0
+                case 2: 
+                    out = out.capitalize()
+            print(out)
             tlOut += out
             i += (int) (len(item) / 6)   
 
@@ -116,7 +134,9 @@ def transliterateBin(inputB):
             print(f"Checking {item}, length {len(item)}")
             if TRAN == 0:
                 if not chkFlags(item) or CONT:
-                    print(f"{item} is not a flag.")
+                    print(f"Flag not found, or flag raised and {CONT}")
+                    #print(f"{item} is not a flag.")
+                    CONT = 0
                     if NME and (item in nLib.keys() or item in nums.keys()):
                         #print(f"Checking nemeth: {nLib[item]}")
                         NEM(item)
@@ -125,17 +145,8 @@ def transliterateBin(inputB):
                         UEB(item)
                 else:
                     i += (int) (len(item) / 6)
-                    print(f"Item not valid")
-                """ if (item in bLib.keys() or item in nLib.keys())
-                    
-                    TRAN = 0
-                    if not chkFlags(item):
-                        if (NME):
-                            NEM(item)
-                        else:
-                            UEB(item)
-                    else:
-                        i += 1 """
+                    print(f"Item is a flag...skipping")
+
             #print(tlOut)
     print(tlOut)
     
