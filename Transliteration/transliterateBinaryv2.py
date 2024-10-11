@@ -41,12 +41,13 @@ flags = {
     "000001" : "CAP",
     "000011" : "GD1",
     "100111" : "FRA",
+    "000111" : "MIX"
 }
 
 
 def transliterateBin(inputB):
-    global CAP, LEN, TRAN, NME, LIB, NUM, PUN, FRACT, SPC, CONT, bLib, nLib, tlOut, lastOut, i
-    LIB = CAP = LEN = TRAN = NME = NUM = PUN = FRACT = SPC = CONT = 0
+    global CAP, LEN, TRAN, NME, LIB, NUM, PUN, FRACT, SPC, CONT, MIX, bLib, nLib, tlOut, lastOut, i
+    LIB = CAP = LEN = TRAN = NME = NUM = PUN = FRACT = SPC = CONT = MIX =  0
     global flags
     NME = 1 # Remove when ready to test mixed Braille
     tlOut = ""
@@ -77,7 +78,7 @@ def transliterateBin(inputB):
         #print(f"POSSIBLE: {possible}")
         def chkFlags(item):
             
-            global PUN, CAP, NUM, FRACT, NME, CONT
+            global PUN, CAP, NUM, FRACT, NME, CONT, MIX
             if item in nLib.keys():
                 CONT = 1;
             else:
@@ -90,6 +91,7 @@ def transliterateBin(inputB):
                 FRACT = 1 if flags[item] == "FRA" else 0
                 FRACT = 0 if (flags[item] == "NUM" and FRACT == 1) else FRACT
                 NUM = 1 if ((flags[item] == "NUM" and FRACT == 0) or FRACT == 1) else 0
+                MIX = 1 if flags[item] == "MIX" else 0
                 print(CAP)
                 #print(PUN or CAP or NUM or FRACT)
                 return (PUN or CAP or NUM or FRACT)
