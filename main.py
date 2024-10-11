@@ -14,14 +14,14 @@ def connect():
     status.config(text = "Connecting...")
     server = inputtxt.get(1.0, 'end')
     try:
-        ssh = createSSHClient(server, 22, "leap", "BestTeam")
+        ssh = createSSHClient(server, port = 22, username = "leap", password = "BestTeam")
         ssh.invoke_shell()
         stdin, stdout, stderr = ssh.exec_command('/bin/bash -lc "cd Transliteration; python transliteration.py"')
-        scp = SCPClient(ssh.get_transport())
+        scp = SCPClient(ssh.get_transport(), socket_timeout=3.0)
         status.config(text = "Connected!")
         gui('transliterateOutput.txt', scp)
-    except:
-        status.config(text = 'Connection Failed.')
+    except Exception as e:
+    	print("An exception occurred:", type(e).__name__, e)
     
 	
 def on_closing():
