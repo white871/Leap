@@ -10,13 +10,10 @@ with open('UEBLib.txt', 'r') as bL:
     bLdata = bL.read()
 bLib = ast.literal_eval(bLdata)
 
-""" with open('brailletobinary.txt', 'r', encoding = "utf-8") as f:
-    bbD = f.read()
-b2b = ast.literal_eval(bbD) """
-
 with open('nemethLib.txt', 'r') as nL:
     nLdata = nL.read()
 nLib = ast.literal_eval(nLdata)
+
 nums = {
   "010000" : "1",
   "011000": "2",
@@ -41,7 +38,7 @@ nums = {
 # MIX: Mixed fraction indicator
 # GD1: Grade 1 indicator (Only for UEB)
 NEMFlags = {
-    "001111" : "./NUM",       # Numeric indicator
+    "001111" : "./NUMIND",       # Numeric indicator
     "000100011100" : "./NUM", # $
     "000100100100" : "./NUM", # Cent symbol
     "111011" : "./NUM",       # Opening Parenthesis
@@ -51,29 +48,40 @@ NEMFlags = {
     "000001" : "./CAP",
     "000011" : "./GD1",
     "100111" : "./FRA",
-    "000111" : "./MIX",
-    "000111100011" : "./NEM", # Closing nemeth indicator
+    "000111100111" : "./FRA",
+    #"000111" : "./MIX",
+    "000111100011000000" : "./NEM", # Closing nemeth indicator
+    "000111100101000000" : "./OPENNEM",
     "000001001000" : "./SWI",
     "000110" : "./SUP",
     "000010" : "./BASE",
-    
-    
-    
+    "110001" : "./SEG",
+    "010101010010010010101010" : "./LINE",
+    "110101101010" : "./RAY",
+    "110111" : "./TERM",
+    "110001" : "./OVER",
+    "100011" : "./BAR",
+    "001110" : "./RAD",
+    "000001100111" : "./COMS",
+    "000001001111" : "./COME",
+    "000001001100" : "./COMH"
 }
 UEBFlags = {
     "000011" : "./GD1",
     "000011001000" : "./GD1TERM",
     "000001" : "./CAP",
-    "000001001000": "./CAPTERM"
+    "000001001000": "./CAPTERM",
+    "000111100101000000" : "./NEM",
+    "000111100011000000" : "./CLOSENEM"
 }
 
 
 def transliterateBin(inputB):
     global \
         CAP, LEN, TRAN, NME, LIB, NUM, PUN, FRACT, \
-        SPC, CONT, MIX, GD1, SUP, \
+        SPC, CONT, MIX, GD1, SUP, PASTFRACT, SWI,\
         bLib, nLib, tlOut, prev, i, iarr
-    LIB = CAP = LEN = TRAN = NME = SUP = NUM = PUN = FRACT = SPC = CONT = MIX = GD1 =  0
+    LIB = CAP = LEN = TRAN = NME = SUP = NUM = PUN = FRACT = SPC = CONT = MIX = GD1 = PASTFRACT = SWI = 0
     global flags
     NME = 1 # Remove when ready to test mixed Braille
     tlOut = ""
@@ -93,7 +101,7 @@ def transliterateBin(inputB):
     print(f"Input array: {iarr}")
     possible = []
     i = 1
-    while(i < len(iarr)):
+    while(i < len(iarr) - 1):
         possible = [None] * (len(iarr[i:]) if len(iarr) - i < 5  else 5)
         posLen = len(possible)
         print(f"LENGTH: {len(possible)}")
@@ -104,25 +112,38 @@ def transliterateBin(inputB):
         #print(f"POSSIBLE: {possible}")
         def chkFlags(item):
             
-            global PUN, CAP, NUM, FRACT, NME, CONT, MIX, GD1, SUP
+            global PUN, CAP, NUM, FRACT, NME, CONT, MIX, GD1, SUP, SWI, PASTFRACT
+            
+
             if item in nLib.keys():
                 CONT = 1;
             else:
                 CONT = 0;
                 #print(f"{flags[item]}, {FRACT}")
+            print(f"past fract: {PASTFRACT}, fract: {FRACT}")
+            if (item == '000001' and NUM):
+                return 0
             if not NME and item in UEBFlags.keys():
                 CAP += 1 if UEBFlags[item] == "./CAP" else CAP
                 GD1 = 1 if UEBFlags[item] == "./GD1" else 0
+                if UEBFlags[item] == "./NEM":
+                    NME = 1
+                    return 1
                 return (CAP or GD1)
             if NME and item in NEMFlags.keys():
-                CAP += 1 if (NEMFlags[item] == "./CAP" and FRACT == 0) else CAP
-                NUM = 1 if ((NEMFlags[item] == "./NUM" and FRACT == 0) or FRACT == 1) else NUM
-                PUN = 1 if NEMFlags[item] == "./PUN" else 0
+                CAP += 1 if (NEMFlags[item] == "./CAP" and FRACT == 0 and not prev in nums.keys()) else CAP
+                PASTFRACT = FRACT
                 FRACT = 1 if NEMFlags[item] == "./FRA" else FRACT
-                FRACT = 0 if (NEMFlags[item] == "./NUM" and FRACT == 1) else FRACT
+                FRACT = 0 if (NEMFlags[item] == "./NUMIND" and FRACT == 1) else FRACT
+                NUM = 1 if ((NEMFlags[item] == "./NUM" or NEMFlags[item] == "./NUMIND" and FRACT == 0) or FRACT == 1) else NUM
+                PUN = 1 if NEMFlags[item] == "./PUN" else 0
                 MIX = 1 if NEMFlags[item] == "./MIX" else MIX
                 SUP = 1 if NEMFlags[item] == "./SUP" else SUP
                 SUP = 0 if NEMFlags[item] == "./BASE" else SUP
+                SWI = 1 if NEMFlags[item] == "./SWI" else SWI
+                if NEMFlags[item] == "./NEM" or SWI:
+                    NME = 0
+                    return 1
                 #print(CAP)
                 #print(PUN or CAP or NUM or FRACT)
                 return (PUN or CAP or NUM or FRACT or GD1 or MIX or SUP)
@@ -130,9 +151,12 @@ def transliterateBin(inputB):
             
             
         def UEB(item):
-            global iarr, i, tlOut, TRAN, CAP, GD1, prev
+            global iarr, i, tlOut, TRAN, CAP, GD1, NME, SWI, prev
             spec = 1 # Do all elements have _ or ^?
             TRAN = 0
+            if SWI and item == "000000":
+                SWI = 0
+                NME = 1
             if item == "000000" and CAP == 2:
                 CAP = 0
             spaceBefore = (iarr[i - 1] == "000000" or iarr[i - 1] in UEBFlags.keys())
@@ -184,8 +208,10 @@ def transliterateBin(inputB):
             print(tlOut)
 
         def NEM(item):
-            global tlOut, i, TRAN, NUM, CAP, SPC, SUP
+            global tlOut, i, TRAN, NUM, CAP, SPC, SUP, PASTFRACT, FRACT, prev
             print(f"{item} passed, checking")
+            print(f"PREV: {prev}")
+            
             #print(nLib[item])
             print(SUP)
             if item == '000000':
@@ -198,8 +224,14 @@ def transliterateBin(inputB):
             else:
                 SPC = 0
             TRAN = 1
+
+            if prev == "./FRA" and not PASTFRACT:
+                tlOut += "("
+            if prev == "./NUMIND" and PASTFRACT:
+                tlOut += ")"
             #print(f"NUM: {NUM}")
             if NUM and item in nums.keys(): 
+                #print("NUM!")
                 out = nums[item]
             else:
                 out = nLib[item]
@@ -213,13 +245,17 @@ def transliterateBin(inputB):
             #if SUP:
             #    tlOut += "^" + out
             #else:
+            if item == "001100" and not FRACT:
+                out = "/"
+            prev = out
             print(out)
             tlOut += out
-            
+            print(tlOut)
             i += (int) (len(item) / 6)
             
         for item in possible:
             print(f"Checking {item}, length {len(item)}")
+            print(f"NEM: {NME}")
             if not chkFlags(item) or CONT:
                 #print(f"Flag not found, (or flag raised but continue is {CONT})")
                     #print(f"{item} is not a flag.")
@@ -238,6 +274,7 @@ def transliterateBin(inputB):
                 i += (int) (len(item) / 6)
                 prev = UEBFlags[item] if not NME else NEMFlags[item]
                 print(f"Item is a flag {prev}")
+                break
 
             #print(tlOut)
     print(tlOut)

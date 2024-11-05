@@ -3,12 +3,13 @@
   #"001111" : "./numeric indicator" ,
   #"000111" : "./punctuation indicator",
   #"000001" : ",",
+  "011001" : "?",
   #mathematical comma
-  "001101" : "+",
-  "001001" : "-",
+  "001101" : " + ",
+  "001001" : " - ",
   "000101101000" : "=",
-  "000101010000" : ">",
-  "000010101000" : "<",
+  "000000000101010000000000" : " > ",
+  "000000000010101000000000" : " < ",
   #abbrecviations below
   "000110000101100001000000" : u'\N{DEGREE SIGN}',
   "010100101110" : "in",
@@ -36,19 +37,19 @@
   "010011": "." , # Period
   "000101" : ".", #decimal point
   "000100011100" : "$", #acts as numeric indicator
-  "000100100100" : u'\xa2',
-  "000100100001" : u'\xd7',
-  "000101001100" : u'\xf7',
+  "000100100100" : u' \xa2 ',
+  "000100100001" : u' \xd7 ',
+  "000101001100" : u' \xf7 ',
   "111011" : "(", #acts as numeric indicator use nemeth numbers inside and terminates when space is hit
   "011111" : ")", 
   #fractions are below remember letters can be put into fractions as well as numbers
   #"100111" : "./opening fraction indicator", # acts as a numeric indicator
-  "001100" : "/", #diagonal line serperating nummerator on left and denominator on right
+  "001100" : ")/(", #diagonal line serperating nummerator on left and denominator on right
   #"001111" : "./closing fraction indicator",
   #end of fractions
   "111111" : "?", #omission symbol showing the student is meant to find what is supposed to be here its like an unknown
   "001000001000001000" : "...", #ellipsis
-  "001001001001001001001001" : "—",
+  "001001001001001001001001" : "___",
   #Roman Numerals watch out I think they act kinda weird I do not understand it
   "000011000001010100" : "I",
   "000011000001111001" : "V",
@@ -58,10 +59,11 @@
   "000011000001101100" : "M",
   "000011111001" : "v",
   "000011010100010100010100" : "iii",
-  "000111100111" : "./opening mixed fraction indicator", #acts as a numeric indicator
-  "000111001111" : "./closing mixed fraction indicator" ,
-  "000111100101" : "./opening Nemeth Indiciator",
-  "000111100011" : "./closing nemeth indicator",
+  "000111100111" : u' \xd7 (',
+  #"000111100111" : "./opening mixed fraction indicator", #acts as a numeric indicator
+  #"000111001111" : "./closing mixed fraction indicator" ,
+  #"000111100101" : "./opening Nemeth Indiciator",
+  #"000111100011" : "./closing nemeth indicator",
   "000001001000" : "./single-word switch indicator", #acts as a single word Nemeth terminator
   # variables are next read section 4.1 for more info on implementation
   "000101111100" : "π",
@@ -69,7 +71,7 @@
   "110101011110" : "△",
   "110101010011" : "□",
   "110101100100" : "○",
-  "000010010000" : ":", #rato
+  "000000000010010000000000" : " : ", #rato
   "000100001011" : "%",
   #Basic gemoetric symbol rules need to be read it looks kinda complicated
   "110101010101" : "∠",
@@ -115,8 +117,8 @@
   #"000010": "./baseline indicator",
   #if you are writing a negative number then use a numeroc indicator after the minus sign but for indicating a positive number the plus acts as a numeric indicator 
   "110011" :  "|",
-  #"110001" : "./directyl over indicator",
-  #"100011" : "./horizontal bar indicator",
+  "110001" : "_bar",
+  "100011" : "_bar",
   "000101010000100011" : "≥",
   "000010101000100011" : "≤",
   "000100111011" : "",
@@ -129,7 +131,7 @@
   #"000001001100" : "./complex horizontal fraction line",
   #"000001000111001100" : "./diagonal complex fraction line",
   "100001" : "⋅",
-  #"001110" : "./start radical indicator",
+  "001110" : "√",
   "001101001001" : "±",
   "001001001101" : "∓",
   "001100000101101000" : "≠"
