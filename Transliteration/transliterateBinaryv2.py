@@ -26,6 +26,12 @@ nums = {
   "001010": "9",
   "001011": "0",
 }
+punctuation = {
+    "010011": "." ,
+    "011001" : "?",
+    "011010" : "!",
+    "001011" : '"',
+}
 # FLAGS
 # CAP: Capitalization (1 -> letter, 2 -> word, 3 -> passage)
 # NME: Nemeth (1 -> Transliterate into Nemeth, 0 -> Transliterate into UEB)
@@ -44,14 +50,14 @@ NEMFlags = {
     "001101" : "./NUM",       # Plus
     "001001" : "./NUM",       # Minus
     "110011" : "./NUM",       # Vertical Bar
-    "001110" : "./NUM",
+    "001110" : "./NUM",       # Radical Sign
     "001101001001" : "./NUM",
     "001001001101" : "./NUM",
     "000111" : "./PUN",   
     "000001" : "./CAP",
     "000011" : "./GD1",
     "100111" : "./FRA",
-    "000111100111" : "./FRA",
+    "000111100111" : "./MIX",
     #"000111" : "./MIX",
     "000111100011" : "./NEM", # Closing nemeth indicator
     "000111100101" : "./OPENNEM",
@@ -85,9 +91,9 @@ UEBFlags = {
 def transliterateBin(inputB):
     global \
         CAP, LEN, TRAN, NME, LIB, NUM, PUN, FRACT, \
-        SPC, CONT, MIX, GD1, SUP, PASTFRACT, SWI, PASTSUP, MUL,PARENTH, \
+        SPC, CONT, MIX, GD1, SUP, PASTFRACT, SWI, PASTSUP, MUL, PARENTH, RAD, PASTRAD, \
         bLib, nLib, tlOut, prev, i, iarr, temp
-    LIB = CAP = LEN = TRAN = NME = PARENTH = SUP = NUM = PUN = FRACT = SPC = MUL = CONT = MIX = GD1 = PASTFRACT = PASTSUP = SWI = 0
+    LIB = CAP = LEN = TRAN = NME = PARENTH = SUP = NUM = PUN = FRACT = SPC = MUL = CONT = MIX = GD1 = PASTFRACT = PASTSUP = SWI = RAD = PASTRAD = 0
     global flags
     NME = 1 # Remove when ready to test mixed Braille
     tlOut = ""
@@ -117,18 +123,21 @@ def transliterateBin(inputB):
                 possible[posLen - k - 1] = ("".join(iarr[i:i+k+1]))
         
         #print(f"POSSIBLE: {possible}")
+
         def chkFlags(item):
             
-            global i, PUN, CAP, NUM, FRACT, NME, CONT, MIX, GD1, SUP, SWI, MUL, RAD, PASTFRACT, PASTSUP
-            
+            global i, iarr, tlOut, PUN, CAP, NUM, FRACT, NME, CONT, MIX, GD1, SUP, SWI, MUL, RAD, PASTFRACT, PASTSUP, PASTRAD
+            print(f"NUM: {NUM}")
             if item in nLib.keys():
                 CONT = 1;
             else:
                 CONT = 0;
                 #print(f"{flags[item]}, {FRACT}")
-            print(f"past fract: {PASTFRACT}, fract: {FRACT}")
+            
             if not NME and item in UEBFlags.keys():
+                
                 CAP += 1 if UEBFlags[item] == "./CAP" else CAP
+                
                 GD1 = 1 if UEBFlags[item] == "./GD1" else 0
                 if UEBFlags[item] == "./NEM":
                     NME = 1
@@ -137,24 +146,44 @@ def transliterateBin(inputB):
                     return 1
                 return (CAP or GD1)
             if NME and item in NEMFlags.keys():
+                if (iarr[i-1] == "000000"):
+                    CAP = 0
+                    
                 print(NEMFlags[item])
                 CAP += 1 if (NEMFlags[item] == "./CAP" and FRACT == 0) else CAP
                 PASTFRACT = FRACT
                 PASTSUP = SUP
-                FRACT = 1 if NEMFlags[item] == "./FRA" or NEMFlags[item] == "./COMS" else FRACT
-                FRACT = 0 if (NEMFlags[item] == "./NUMIND" and FRACT == 1 or NEMFlags[item] == "./COMH") else FRACT
-                NUM = 1 if ((NEMFlags[item] == "./NUM" or NEMFlags[item] == "./NUMIND" and FRACT == 0) or FRACT == 1) else NUM
-                PUN = 1 if NEMFlags[item] == "./PUN" else 0
+                PASTRAD = RAD
+                if NEMFlags[item] == "./RAD":
+                    RAD = 1
+                    tlOut += u"\N{SQUARE ROOT}"
+                    tlOut += '('
+                if NEMFlags[item] == "./TERM":
+                    RAD = 0
+                    tlOut += ')'
+                
+                if NEMFlags[item] == "./FRA" or NEMFlags[item] == "./COMS" or NEMFlags[item] == "./MIX":
+                    FRACT += 1
+                    if NEMFlags[item] == "./MIX":
+                        tlOut += u"\N{MIDDLE DOT}"
+                    tlOut += '('
+                if ((NEMFlags[item] == "./NUMIND" or NEMFlags[item] == "./COME") and FRACT != 0):
+                    FRACT -= 1
+                    tlOut += ')'
+                #FRACT = 0 if (NEMFlags[item] == "./NUMIND" and FRACT == 1 or NEMFlags[item] == "./COMH") else FRACT
+                NUM = 1 if ((NEMFlags[item] == "./NUM" or NEMFlags[item] == "./NUMIND" and FRACT == 0) or FRACT or RAD) else NUM
+                PUN = 1 if NEMFlags[item] == "./PUN" else PUN
                 MIX = 1 if NEMFlags[item] == "./MIX" else MIX
                 MUL = 1 if NEMFlags[item] == "./BASE" and not SUP else MUL
                 SUP = 1 if NEMFlags[item] == "./SUP" else SUP
                 SUP = 0 if NEMFlags[item] == "./BASE" else SUP
                 SWI = 1 if NEMFlags[item] == "./SWI" else SWI
-
+                print(f"past fract: {PASTFRACT}, fract: {FRACT}")
+                print(f"past rad: {PASTRAD}, rad: {RAD}")
                 if NEMFlags[item] == "./NEM" or SWI:
                     NME = 0
-                    if (iarr[i+1] == '000000'):
-                        i = i+1
+                    if (iarr[i+2] == '000000'):
+                        i = i+2
                     return 1
                 #print(CAP)
                 #print(PUN or CAP or NUM or FRACT)
@@ -164,6 +193,11 @@ def transliterateBin(inputB):
             
         def UEB(item):
             global iarr, i, tlOut, TRAN, CAP, GD1, NME, SWI, prev
+            print(f"PREV: {prev}")
+            if prev == "./CLOSENEM":
+                GD1 = 1
+            else:
+                GD1 = 0
             spec = 1 # Do all elements have _ or ^?
             TRAN = 0
             if SWI and item == "000000":
@@ -220,45 +254,47 @@ def transliterateBin(inputB):
             print(tlOut)
 
         def NEM(item):
-            global tlOut, i, TRAN, NUM, CAP, SPC, SUP, MUL, PASTFRACT, FRACT, prev, temp, PARENTH
+            global tlOut, i, iarr, TRAN, NUM, CAP, SPC, PUN, SUP, MUL, PASTFRACT, FRACT, PASTRAD, prev, temp, PARENTH
             print(f"{item} passed, checking")
             print(f"PREV: {prev}")
+            print(f"PUN: {PUN}")
+            print(f"CAP: {CAP}")
             #print(nLib[item])
             print(SUP)
             # Ordered Pairs
            
-            if item == '000000':
-                SPC = 1
+            if item == "000000" or item == "000001000000":
                 if not PARENTH:
                     NUM = 0
                 CAP = 0
                 if SUP:
                     tlOut += ")"
                 SUP = 0
-            else:
-                SPC = 0
+                PUN = 0
             TRAN = 1
             
             if prev == "./BASE" and PASTSUP:
                 tlOut += ")"
-            if prev == "./FRA":
-                if not PASTFRACT:
-                    tlOut += "("
-                else:
-                    tlOut += "(("
-            if prev == "./NUMIND" and PASTFRACT:
-                tlOut += ")"
+                    
+                    
+
+                
+            #if prev == "./NUMIND" and PASTFRACT:
+               # tlOut += ")"
             if prev == "./LINE":
                 tlOut += r'$\overline{temp}$'
                 temp = ""
                 MUL = 0
             #print(f"NUM: {NUM}")
-            
-            if NUM and item in nums.keys(): 
+            if PUN and item in punctuation.keys():
+                out = punctuation[item]
+            elif NUM and item in nums.keys(): 
                 #print("NUM!")
                 out = nums[item]
             else:
                 out = nLib[item]
+        
+            # Parentheses, Brackets, & Braces! Oh my!        
             if out == "(":
                 PARENTH = 1
                 if prev == ".":
@@ -277,7 +313,8 @@ def transliterateBin(inputB):
                     out = ']'
                 if prev == "./BOLD":
                     out = '\033[1m' + ']' + '\033[0m'
-            if out[0] == "_" :
+            # Lines, bars, rays, not statement to exclude long dashes
+            if out[0] == "_" and out[1] != "_" : 
                 if MUL:
                     tlOut += f'{out[1:]}({temp}'
                     out = ""
@@ -287,6 +324,11 @@ def transliterateBin(inputB):
                     tlOut = tlOut[:-1]
                     tlOut += f'{out[1:]}({prev}'
                     out = ""
+            if out == " + " or out == " - ":
+                if not prev.isalnum() and prev != u'\xa2' and prev != "$" and prev != " " and prev != "./BASE":
+                    out = out.strip()
+                if MUL: 
+                    MUL = 0
             match CAP: 
                 case 1:
                     out = out.capitalize()
@@ -301,17 +343,23 @@ def transliterateBin(inputB):
                 out = "/"
             prev = out
             print(out)
-            if MUL:
+            if MUL and out.isalnum():
+                print("Stored in temp.")
                 temp += out
             else:
                 tlOut += out
                 
             print(tlOut)
             i += (int) (len(item) / 6)
-            
+        print(iarr[i-1])
+        if (iarr[i-1] == "000000"):
+            SPC = 1
+        else:
+            SPC = 0
         for item in possible:
             print(f"Checking {item}, length {len(item)}")
             print(f"NEM: {NME}")
+            
             if not chkFlags(item) or CONT:
                 #print(f"Flag not found, (or flag raised but continue is {CONT})")
                     #print(f"{item} is not a flag.")
