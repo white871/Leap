@@ -327,8 +327,8 @@ def transliterateBin(inputB):
                     tlOut = tlOut[:-1]
                     tlOut += f'{out[1:]}({prev})'
                     out = ""
-            if out == " + " or out == " - ":
-                if not prev.isalnum() and prev != u'\xa2' and prev != "$" and prev != " " or prev == "./BASE":
+            if out == " + " or out == " - " or out == u" \N{PLUS-MINUS SIGN} " or out == u" \N{MINUS-OR-PLUS SIGN}":
+                if not prev.isalnum() and prev != u'\N{DEGREE SIGN}' and prev != u'\xa2' and prev != "$" and prev != " " or prev == "./BASE":
                     out = out.strip()
                 if MUL: 
                     MUL = 0
