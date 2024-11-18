@@ -38,7 +38,7 @@ def connect():
 		login.update()
 		server = ip_entry.get()
 		try:
-			ssh = createSSHClient(server, 22, "leap", "BestTeam")
+			ssh = createSSHClient(server, 22, "Leap", "BestTeam")
 			ssh.invoke_shell()
 			ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('/bin/bash -lc "cd Transliteration; python transliteration.py"')
 			scp_client = scp.SCPClient(ssh.get_transport(), socket_timeout = 3.0)
@@ -118,10 +118,10 @@ def to_login(): # Sequence 1
 		status.pack(pady = 1)
 	
 win = tkinter.Tk()
-win.title('Leap Transliteration Reader v 0.1.0')
+win.title('Leap Transliteration Reader v 0.2.0')
 win.geometry('720x480')
 
-label1 = tkinter.Label(win, text = 'Leap Transliteration Reader v 0.1.0', font = ('Calibri 20 bold'))
+label1 = tkinter.Label(win, text = 'Leap Transliteration Reader v 0.2.0', font = ('Calibri 20 bold'))
 label2 = tkinter.Label(win, text = "Please read the following below before continuing!", font = ('Calibri 15 bold'))
 label3 = tkinter.Label(win, text = 'To begin, you will need to create a hotspot on your computer. For Windows 10: open settings, open Network & Internet, then Mobile Hotspot. Edit the network name and password to "PiConfig", then switch the Mobile Hotspot "on". When the device is connected, the IP Address should show up on the window on your computer: copy it down.', wraplength = 600, font = ('Calibri 15'))
 label1.pack(pady = 20)
