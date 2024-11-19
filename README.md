@@ -1,9 +1,9 @@
 # Leap Raspberry Pi Code
 
-*Last updated: 5/30/2024 by Joseph White*
+
 =======
 Original Authors: Joseph White (*white871@purdue.edu*) and Patrick Baysinger (*Graduated Spring 2024, patbaysing@gmail.com*)<br> <br>
-This repository contains Python code for reading Hall Effect sensor outputs, UEB Grade 2 transliteration, reading rotary encoder outputs and line reading, connecting via ssh, outputting to a word document in real-time, and building the GUI for user-friendliness. <br> <br>
+This repository contains Python code for reading Hall Effect sensor outputs, UEB Grade 2 and Nemeth transliteration, reading rotary encoder outputs and line reading, connecting via ssh, outputting to a word document in real-time, and building the GUI for user-friendliness. <br> <br>
 For more information regarding our progress and a more in-depth explanation on what we use in this project, look at the software transition document in Microsoft Teams.
 ## This code must be kept up to date with the code in the Raspberry Pi; you can copy files to and from the Raspberry Pi using an ssh connection.
 ### Connecting to the Raspberry Pi: 
@@ -23,6 +23,7 @@ For more information regarding our progress and a more in-depth explanation on w
 ### For building an EXE file
   - Download PyInstaller using "pip install PyInstaller"
   - Run "python -m PyInstaller --onefile --hidden-import tkinter -w leap.py" in the directory where leap.py is present.
+  - Make sure you have all libraries in Client/leap.py to successfully build the .exe file. 
 ## If multiple people are working on the Leap code:
 - Fork the repository so you can make updates to the code all you like. Make a pull request and upload the code when you're done to keep the main repository and the Pi updated. NOTE: I highly recommend working on separate code files overall, Github will not merge changes for one file from different users, only from one user. 
 ## If original authors are no longer on the team
@@ -38,4 +39,8 @@ For more information regarding our progress and a more in-depth explanation on w
 
 ## Main Files:
 **main.py**: Python file that creates the GUI using Tkinter and opens a local ssh connection to obtain the Raspberry Pi outputs wirelessly (see instructions on using a hotspot for connecting to the Rapsberry Pi)<br>
-**leap.exe**: Our first build of the application itself, currently in a soft delivery stage
+**leap.exe**: The application itself, currently in a soft delivery stage <br>
+Current version is v0.2.0: Fixed an issue where ssh would not connect due to naming the new Raspberry Pi username ("Leap" instead of "leap"...whoops.) <br>
+Leap.exe past versions: <br>
+- v0.1.0: First iteration - Allows user to connect to Raspberry Pi using a mobile hotspot connection on windows, opens Microsoft word to allow user to monitor real-time transliteration (only works for windows devices, win32com is a windows-exclusive library.)
+
