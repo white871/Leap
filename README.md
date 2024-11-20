@@ -21,9 +21,14 @@ For more information regarding our progress and a more in-depth explanation on w
 - To copy a file FROM the pi, open terminal and use the following command: scp (pi name)@(pi address):~/(directory on Pi) (directory on user's computer)
   - I recommend copying files from the Pi directly to your local Github repository folder to make updating the online repository a quicker process
 ### For building an EXE file
+The simpler way (quicker but less secure): <br>
   - Download PyInstaller using "pip install PyInstaller"
   - Run "python -m PyInstaller --onefile --hidden-import tkinter -w leap.py" in the directory where leap.py is present.
-  - Make sure you have all libraries in Client/leap.py to successfully build the .exe file. 
+  - Make sure you have all libraries in Client/leap.py to successfully build the .exe file.
+The lengthier way: <br>
+  - Download nuitka using "pip install nuitka" or "python -m pip install nuitka"
+  - Make sure you installed all imported Python libraries in Client/leap.py
+  - Run "python -m nuitka --standalone --onefile --enable-plugin=tk-inter --mingw64 --windows-icon-from-ico=leap.ico leap.py"
 ## If multiple people are working on the Leap code:
 - Fork the repository so you can make updates to the code all you like. Make a pull request and upload the code when you're done to keep the main repository and the Pi updated. NOTE: I highly recommend working on separate code files overall, Github will not merge changes for one file from different users, only from one user. 
 ## If original authors are no longer on the team
@@ -40,7 +45,9 @@ For more information regarding our progress and a more in-depth explanation on w
 ## Main Files:
 **main.py**: Python file that creates the GUI using Tkinter and opens a local ssh connection to obtain the Raspberry Pi outputs wirelessly (see instructions on using a hotspot for connecting to the Rapsberry Pi)<br>
 **leap.exe**: The application itself, currently in a soft delivery stage <br>
-Current version is v0.2.0: Fixed an issue where ssh would not connect due to naming the new Raspberry Pi username ("Leap" instead of "leap"...whoops.) <br>
+*Current version is v0.2.0*: 
+- Fixed an issue where ssh would not connect due to naming the new Raspberry Pi username ("Leap" instead of "leap"...whoops.) <br>
+- Fixed (mostly) an issue where Windows Defender would flag/delete application as a virus (See "For building an exe file"
 Leap.exe past versions: <br>
 - v0.1.0: First iteration - Allows user to connect to Raspberry Pi using a mobile hotspot connection on windows, opens Microsoft word to allow user to monitor real-time transliteration (only works for windows devices, win32com is a windows-exclusive library.)
 
