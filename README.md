@@ -21,11 +21,11 @@ For more information regarding our progress and a more in-depth explanation on w
 - To copy a file FROM the pi, open terminal and use the following command: scp (pi name)@(pi address):~/(directory on Pi) (directory on user's computer)
   - I recommend copying files from the Pi directly to your local Github repository folder to make updating the online repository a quicker process
 ### For building an EXE file
-The simpler way (quicker but less secure): <br>
+The simpler way (quicker but less secure, recommend for application testing): <br>
   - Download PyInstaller using "pip install PyInstaller"
   - Run "python -m PyInstaller --onefile --hidden-import tkinter -w leap.py" in the directory where leap.py is present.
-  - Make sure you have all libraries in Client/leap.py to successfully build the .exe file.
-The lengthier way: <br>
+  - Make sure you have all libraries in Client/leap.py to successfully build the .exe file. <br>
+<!-- --> The lengthier way (takes longer, but creates a more secure application, recommend for finalizing application): <br> <br>
   - Download nuitka using "pip install nuitka" or "python -m pip install nuitka"
   - Make sure you installed all imported Python libraries in Client/leap.py
   - Run "python -m nuitka --standalone --onefile --enable-plugin=tk-inter --mingw64 --windows-icon-from-ico=leap.ico leap.py"
