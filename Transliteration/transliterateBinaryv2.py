@@ -115,7 +115,7 @@ def transliterateBin(inputB):
             if k < posLen:
                 possible[posLen - k - 1] = ("".join(iarr[i:i+k+1]))
         
-        print(f"POSSIBLE: {possible}")
+        #print(f"POSSIBLE: {possible}")
 
         def chkFlags(item):
             
@@ -282,7 +282,7 @@ def transliterateBin(inputB):
                 if NUM:
                     a_to_n = {"a" : "1", "b" : "2", "c" : "3", "d" : "4", "e" : "5", "f" : "6", "g" : "7", "h" : "8", "i" : "9"}
                     out = a_to_n[out]
-                print(out)
+                #print(out)
                 out = out.replace("_", "").replace("^","")
                 tlOut += out
                 i += (int)(len(item) / 6)
@@ -314,7 +314,7 @@ def transliterateBin(inputB):
                 out = nums[item]
             else:
                 out = nLib[item]
-            print(out)
+            #print(out)
             # Parentheses, Brackets, & Braces! Oh my!        
             if out == "(":
                 PARENTH = 1
@@ -373,8 +373,8 @@ def transliterateBin(inputB):
         else:
             SPC = 0
         for item in possible:
-            print(f"Checking {item}, length {len(item)}")
-            print(f"NEM: {NME}")
+            #print(f"Checking {item}, length {len(item)}")
+            #print(f"NEM: {NME}")
             
             if not chkFlags(item) or CONT:
                 CONT = 0
@@ -394,9 +394,13 @@ def transliterateBin(inputB):
                 prev = UEBFlags[item] if not NME else NEMFlags[item]
                 break
 
-            print(tlOut)
-
-    return tlOut[:-1]
+            #print(tlOut)
+    tlOut = tlOut.strip()
+    f_out = open('transliterateOutput.txt', 'w')
+    f_out.write(tlOut)
+    f_out.close()
+    #return tlOut[:-1]
+    
     
 """ 
 with open('nemethTestCasetest.txt', 'w', encoding = 'utf-8') as out:
