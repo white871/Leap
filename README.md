@@ -44,10 +44,15 @@ The simpler way (quicker but less secure, recommend for application testing): <b
 
 ## Main Files:
 **main.py**: Python file that creates the GUI using Tkinter and opens a local ssh connection to obtain the Raspberry Pi outputs wirelessly (see instructions on using a hotspot for connecting to the Rapsberry Pi)<br>
-**leap.exe**: The application itself, delivered Fall 2024
-*Current version is v0.2.1*: 
+**leap.exe**: The application itself, delivered Fall 2024 <br>
+*Current version is v0.2.1*: <br>
 - Fixed an issue where ssh would not connect due to naming the new Raspberry Pi username ("Leap" instead of "leap"...whoops.) <br>
 - Fixed (mostly) an issue where Windows Defender would flag/delete application as a virus (See "For building an exe file")<br>
 Leap.exe past versions: <br>
 - v0.1.0: First iteration - Allows user to connect to Raspberry Pi using a mobile hotspot connection on windows, opens Microsoft word to allow user to monitor real-time transliteration (only works for windows devices, win32com is a windows-exclusive library.)
+## Known bugs/Recommended goals
+- Unrecognized inputs: If incorrect input that the program does not recognize, the program will terminate. I recommend making it so the program instead ignores the incorrect input and continues
+- Encoding issues: To properly output mathematical symbols such as radical signs, degrees, etc., we use utf-8 encoding. This does not properly translate from transliterationOutput.txt to the word document, this requires rebuilding the exe (see "For building an EXE file")
+- Inconsistenties with switching codes: Not much of a bug (more of a QoL addition), but it would be helpful to include some indication that the program switched transliteration codes (nemeth to UEB and vice versa)
+- Updating difficulties: Most of the transliteration processes take place on the Pi, making it tedious to update any changes/fixes to the Python files. Consider working on moving transliteration processes into the client program and let the Pi only read and send sensor and encoder inputs.
 
