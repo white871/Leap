@@ -51,8 +51,8 @@ The simpler way (quicker but less secure, recommend for application testing): <b
 Leap.exe past versions: <br>
 - v0.1.0: First iteration - Allows user to connect to Raspberry Pi using a mobile hotspot connection on windows, opens Microsoft word to allow user to monitor real-time transliteration (only works for windows devices, win32com is a windows-exclusive library.)
 ## Known bugs/Recommended goals
-- Unrecognized inputs: If incorrect input that the program does not recognize, the program will terminate. I recommend making it so the program instead ignores the incorrect input and continues
-- Encoding issues: To properly output mathematical symbols such as radical signs, degrees, etc., we use utf-8 encoding. This does not properly translate from transliterationOutput.txt to the word document, this requires rebuilding the exe (see "For building an EXE file")
-- Inconsistenties with switching codes: Not much of a bug (more of a QoL addition), but it would be helpful to include some indication that the program switched transliteration codes (nemeth to UEB and vice versa)
-- Updating difficulties: Most of the transliteration processes take place on the Pi, making it tedious to update any changes/fixes to the Python files. Consider working on moving transliteration processes into the client program and let the Pi only read and send sensor and encoder inputs.
+- **Unrecognized inputs**: If incorrect input that the program does not recognize, the program will terminate. I recommend making it so the program instead ignores the incorrect input and continues
+- **Encoding issues**: To properly output mathematical symbols such as radical signs, degrees, etc., we use utf-8 encoding. This does not properly translate from transliterationOutput.txt to the word document, this requires rebuilding the exe (see "For building an EXE file")
+- **Indicators when switching codes**: Not much of a bug (more of a QoL addition), but it would be helpful to include some indication that the program switched transliteration codes (nemeth to UEB and vice versa)
+- **Updating difficulties**: Most of the transliteration processes take place on the Pi, making it tedious to update any changes/fixes to the Python files. Consider working on moving transliteration processes into the client program and let the Pi only read and send sensor and encoder inputs.
 
