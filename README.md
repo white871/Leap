@@ -44,10 +44,10 @@ The simpler way (quicker but less secure, recommend for application testing): <b
 
 ## Main Files:
 **main.py**: Python file that creates the GUI using Tkinter and opens a local ssh connection to obtain the Raspberry Pi outputs wirelessly (see instructions on using a hotspot for connecting to the Rapsberry Pi)<br>
-**leap.exe**: The application itself, currently in a soft delivery stage <br>
-*Current version is v0.2.0*: 
+**leap.exe**: The application itself, delivered Fall 2024
+*Current version is v0.2.1*: 
 - Fixed an issue where ssh would not connect due to naming the new Raspberry Pi username ("Leap" instead of "leap"...whoops.) <br>
-- Fixed (mostly) an issue where Windows Defender would flag/delete application as a virus (See "For building an exe file"
+- Fixed (mostly) an issue where Windows Defender would flag/delete application as a virus (See "For building an exe file")<br>
 Leap.exe past versions: <br>
 - v0.1.0: First iteration - Allows user to connect to Raspberry Pi using a mobile hotspot connection on windows, opens Microsoft word to allow user to monitor real-time transliteration (only works for windows devices, win32com is a windows-exclusive library.)
 
