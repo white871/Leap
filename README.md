@@ -2,6 +2,7 @@
 
 
 =======
+As of Fall 2025, the LEAP project has been continued as PERK with major modifications to this project, thus this repository has been retired. 
 Original Authors: Joseph White (*white871@purdue.edu*) and Patrick Baysinger (*Graduated Spring 2024, patbaysing@gmail.com*)<br> <br>
 This repository contains Python code for reading Hall Effect sensor outputs, UEB Grade 2 and Nemeth transliteration, reading rotary encoder outputs and line reading, connecting via ssh, outputting to a word document in real-time, and building the GUI for user-friendliness. <br> <br>
 For more information regarding our progress and a more in-depth explanation on what we use in this project, look at the software transition document in Microsoft Teams.
